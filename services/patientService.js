@@ -89,6 +89,7 @@ exports.getByName = async(keyword) => {
 
 // Handle updating a Patient by ID
 exports.editPatient = async (patientId,Patient) => {
+    console.log(Patient)
     const profilePic =  img.uploadImage; 
     if(profilePic){
         try{Patient.pro_pic = 'profilePic';}catch(error){console.log(error)}

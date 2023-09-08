@@ -121,7 +121,7 @@ exports.updatePatientById = async (patientId, Patient) => {
     // )
     const query = `
     UPDATE ${table_name} 
-    SET firstName = ?, lastName = ?,   gender = ?, dob = ?, age = ?, phone_no = ?, per_address = ?, occupation = ?, patientDesc = ?,   heartRate=?,bloodGroup=?,height=?,weight=?,   pro_pic=?
+    SET firstName = ?, lastName = ?,   gender = ?, dob = ?, age = ?, phone_no = ?, per_address = ?, occupation = ?, patientDesc = ?,   pro_pic=?,   heartRate=?,bloodGroup=?,height=?,weight=?
     WHERE patientId = ?`;
     try {
         // console.log(Patient.name, Patient.email, Patient.password, patientId);
@@ -136,7 +136,6 @@ exports.updatePatientById = async (patientId, Patient) => {
             Patient.occupation, 
             Patient.desc, 
             Patient.pro_pic,
-
             Patient.heartRate,
             Patient.bloodGroup,
             Patient.height,
