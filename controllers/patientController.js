@@ -94,15 +94,15 @@ exports.getPatientByName = async (req,res) => {
 // Handle updating a Patient by ID
 exports.editPatient = async (req, res) => {
     
-    // let patientId = req.params.patientId;
+    let patientId = req.params.patientId;
     // let Patient1 = req.body;
 
-    let {patientId, ...Patient1} = req.body;
+    let {patient1Id, ...Patient1} = req.body;
     const existingRecord = await query.getPatientById(patientId); 
     let Patient = Patient1;
     // console.log(existingRecord.patientId,">>>>>>>>>>>>>>>>>>>>>>DDDDDDDDDDDDDDDD")
 
-    if(patientId===parseInt(existingRecord.patientId)){
+    if(parseInt(patientId)===parseInt(existingRecord.patientId)){
         try {
             const result = await query.editPatient(patientId,Patient);
             let updatedPatient = await query.getPatientById(patientId);
@@ -112,7 +112,7 @@ exports.editPatient = async (req, res) => {
             res.status(500).json({ error: "Internal Server Error" });
         }
     }else{
-        return res.status(404).json({ error: "User not found" });
+        return res.status(404).json({ error: "Patient not found" });
     }
     voidVal = false; 
 };

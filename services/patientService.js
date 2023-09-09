@@ -89,13 +89,14 @@ exports.getByName = async(keyword) => {
 
 // Handle updating a Patient by ID
 exports.editPatient = async (patientId,Patient) => {
-    console.log(Patient)
+    console.log(patientId,"ASsss",Patient)
     const profilePic =  img.uploadImage; 
     if(profilePic){
         try{Patient.pro_pic = 'profilePic';}catch(error){console.log(error)}
     }
 
     try {
+        console.log(patientId,"hhhhhhhhhhhh",Patient)
         const result = await query.updatePatientById(patientId,Patient);
         let updatedPatient = await query.getPatientById(patientId);
         return{ message: result.message,updatedPatient };
