@@ -2,19 +2,27 @@
 
 const { sign , verify } = require('jsonwebtoken');
 
-exports.createToken = (name , role , type , id) => {
-    const accessToken = sign({ name : name , role : role , type :type , id:id},
-        "JWT_SECRET"
+exports.createToken = (email , id) => {
+    const accessToken = sign({ email : email , id:id},
+        "ACCESS_TOKEN_SECRET"
         );
     return accessToken;
 }
 
 exports.validateToken = (req, res, next) => {
   const accessToken = req.headers.authorization || req.cookies.accessToken;
-
+  
+  console.log("Received AccessToken:", accessToken);
   if (accessToken) {
-    verify(accessToken, "JWT_SECRET", (error, decoded) => {
+    const token = accessToken.split(' ')[1]; // Remove "Bearer " prefix
+    console.log("Received AccessToken:", token);
+  
+
+  console.log("Received AccessToken:", accessToken);
+  if (token) {
+    verify(token, "ACCESS_TOKEN_SECRET", (error, decoded) => {
       if (error) {
+          console.error("Token Verification Error:", error);
           res.status(401).json({ message: 'Access denied!' });
       } else {
           req.user = true;
@@ -23,5 +31,5 @@ exports.validateToken = (req, res, next) => {
     });
   } else {
     res.status(401).json({ message: ' User Access required' });
-  }
+  }}
 };
