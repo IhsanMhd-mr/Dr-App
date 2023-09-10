@@ -10,9 +10,10 @@ exports.createToken = (email , id) => {
 }
 
 exports.validateToken = (req, res, next) => {
+  try{
   const accessToken = req.headers.authorization || req.cookies.accessToken;
-  
-  console.log("Received AccessToken:", accessToken);
+  if(accessToken==undefined){return accessToken=null}
+  // console.log("Received AccessToken:", accessToken);
   if (accessToken) {
     const token = accessToken.split(' ')[1]; // Remove "Bearer " prefix
     console.log("Received AccessToken:", token);
@@ -29,7 +30,8 @@ exports.validateToken = (req, res, next) => {
           next();
       }
     });
-  } else {
+  }
+}else {
     res.status(401).json({ message: ' User Access required' });
-  }}
+  }}catch{res.status(401).json({ message: ' User Access required' });}
 };

@@ -22,8 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //  API routes
 app.use('/patients', require('./routes/patients.js'));
 app.use('/doctors', require('./routes/doctor.js'));
-app.use('/reports', require('./routes/report.js'));
-// app.use('/reports', jwt.validateToken, require('./routes/report.js'));
+// app.use('/reports', require('./routes/report.js'));
+app.use('/reports', jwt.validateToken, require('./routes/report.js'));
 app.use('/login', require('./routes/login.js'));
 
 

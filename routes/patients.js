@@ -12,7 +12,7 @@ router.put('/img/:patientId',upload.single('imgFile'), imageController.imgUpload
 router.get('/list', patientController.getAll);
 router.get('/byName',patientController.getPatientByName)
 router.get('/byId/:patientId', patientController.getPatientById);
-router.put('/editPatient/:patientId', patientController.editPatient);
-router.delete('/deletePatient/:patientId', patientController.deletePatient);
+router.put('/editPatient/:patientId',jwt.validateToken, patientController.editPatient);
+router.delete('/deletePatient/:patientId',jwt.validateToken, patientController.deletePatient);
 
 module.exports = router;
