@@ -37,7 +37,7 @@ exports.validateToken = (req, res, next) => {
           // console.error("Token Verification Error:", error);
           res.status(403).json({ message: 'Access denied!' });
       } else {
-          req.user = true;
+          req.user = decoded;
           next();
       }
     });
@@ -45,6 +45,18 @@ exports.validateToken = (req, res, next) => {
 }else {
     res.status(401).json({ message: ' User Access required' });
   }}catch{res.status(401).json({ message: ' User Access required' });}
+};
+
+
+exports.decodeAccessToken = (accessToken) => {
+  try {
+    const decoded = verify(accessToken, 'ACCESS_TOKEN_SECRET');
+    return decoded;
+  } catch (error) {
+    // Handle invalid tokens or errors here
+    console.error('Error decoding access token:', error);
+    return null;
+  }
 };
 
 exports.loginDoctor = (req,res,next)=>{

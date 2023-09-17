@@ -19,6 +19,7 @@ exports.genAccesToken = async ( user )=>{
 }
 
 exports.deleteToken = async (token) => {
+    console.log("delete token initiated...")
     try {
       let theToken = LoginRepo.removeToken(token);
       return theToken;
