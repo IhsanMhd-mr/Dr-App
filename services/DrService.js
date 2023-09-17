@@ -1,4 +1,5 @@
 const DrRepo = require('../repo/ad_query');
+const Drlogin = require('../services/loginService');
 const jwt = require('../config/JWT.js');
 const bcrypt = require('bcrypt');
 const { access } = require('fs');
@@ -55,16 +56,13 @@ exports.loginDoctor = async (email, password) => {
     if (passwordMatch) {
       // access token goes here.................
       const user = {email:doctor.email,id:1}
-      console.log(user)
+      // console.log(user)
 
-      const accessToken = jwt.createToken(user,process.eventNames.ACCESS_TOKEN_SECRET);
-      const refreshToken = jwt.loginDoctor(user, process.env.REFRESH_TOKEN_SECRET);
-
-      console.log(accessToken)
-      // res.json({})
+      const accessToken = await Drlogin.genAccesToken(user)
+      // console.log(accessToken)
 
 
-      return { message: "Login successful",accessToken:accessToken ,refreshToken:refreshToken};
+      return { message: "Login successful", accessToken:accessToken };
     } else {
       // If the passwords don't match, return an error message.
       return { message: "Incorrect password" };
