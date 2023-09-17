@@ -38,6 +38,7 @@ exports.validateToken = (req, res, next) => {
           res.status(403).json({ message: 'Access denied!' });
       } else {
           req.user = decoded;
+          req.token = token;
           next();
       }
     });

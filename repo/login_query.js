@@ -12,16 +12,22 @@ exports.addToken = (userId, token) => {
     tokenStore[userId] = [];
   }
   tokenStore[userId].push(token);
+  console.log(`Token added for user ${userId}: ${token}`,tokenStore);
 };
 
 // Function to remove a token for a user
 exports.removeToken = (userId, token) => {
+  console.log(tokenStore, "Before removing token");
+
+  const userTokens = tokenStore[userId];
+  const tokenIndex = userTokens.indexOf(token);
+  let x = userTokens.pop();
+    console.log(`Token removed for user ${userId}: ${token}`);
+    console.log(tokenStore.length, "After removing token",x);
   if (!tokenStore[userId]) {
     return false; // User not found, token not removed
   }
-  
-  const userTokens = tokenStore[userId];
-  const tokenIndex = userTokens.indexOf(token);
+
 
   if (tokenIndex !== -1) {
     // Remove the token from the user's tokens
@@ -34,6 +40,12 @@ exports.removeToken = (userId, token) => {
 
     return true; // Token removed
   } else {
+    console.log(`Token not found for user ${userId}: ${token}`);
     return false; // Token not found for the user
   }
+};
+
+// Function to get all tokens for a user
+exports.getUserTokens = (userId) => {
+  return tokenStore[userId] || [];
 };

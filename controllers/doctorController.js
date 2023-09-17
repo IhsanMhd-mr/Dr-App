@@ -55,15 +55,13 @@ exports.loginDoctor = async (req, res) => {
 };
 // LogOUT a doctor
 exports.logoutDoctor = async (req, res) => { 
+  // console.log(req.user,"requser",req.token)
   
-  const accessToken = req.headers.authorization ||"bearer "+ req.cookies.accessToken;
-  if (accessToken) {
-    const token = accessToken.split(' ')[1];
+    const token = req.token
     // const token = req.accessToken;
-    console.log(token)
-    let user = jwt.decodeAccessToken(token);
-    let userId= user.email.id
-    console.log(user,userId)
+    // console.log(token)
+    let userId= req.user.email.id
+    // console.log(req.user,userId)
     try{
       const result = Drlogin.deleteToken(userId,token);
     res.setHeader('Set-Cookie', 'accessToken=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/');
@@ -71,7 +69,7 @@ exports.logoutDoctor = async (req, res) => {
     catch (error) {
       console.error("Doctor already logged out:", error);
       res.status(500).json({ error: "Doctor already logged out" });
-    }}else{res.status(500).json({ error: "Doctor already logged out" });}
+    }
 };
 
 // Get a list of all doctors
