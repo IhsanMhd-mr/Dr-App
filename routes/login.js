@@ -7,5 +7,6 @@ const jwt = require('../config/JWT.js');
 
 
 router.post('/doctor', doctorController.loginDoctor);
+router.post('/doctorout', doctorController.logoutDoctor);
 module.exports = router;
 

@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //  API routes
-app.use('/login', require('./routes/login.js'));
+app.use('/log', require('./routes/login.js'));
 
 
 

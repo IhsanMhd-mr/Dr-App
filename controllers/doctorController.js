@@ -49,6 +49,11 @@ exports.loginDoctor = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+// LogOUT a doctor
+exports.logoutDoctor = async (req, res) => {  
+    res.setHeader('Set-Cookie', 'accessToken=; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Path=/');
+    res.status(200).json({ message: "Doctor logged out"});  
+};
 
 // Get a list of all doctors
 exports.getAll = async (req, res) => {
