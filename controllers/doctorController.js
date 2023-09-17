@@ -1,10 +1,5 @@
 const DrService = require('../services/DrService.js');
 const Doctor = require('../config/Doctor.js');
-const express = require('express');
-const app = express();
-
-const cookieParser = require("cookie-parser");
-app.use(cookieParser());
 
 // Register a new doctor
 exports.register = async (req, res) => {
@@ -39,15 +34,15 @@ exports.loginDoctor = async (req, res) => {
 
     const result = await DrService.loginDoctor(email, password);
 
+    console.log(result)
     // Set the access token inside result.....
     res.cookie("accessToken", result.accessToken, {
-      maxAge: 3600000,
+      maxAge: 259200000,
       httpOnly: true,
       status: true,
       userType: 'user',
       admintype: null
     });
-    
     res.status(200).json({ message: result.message ,accessToken:result.accessToken});
   } catch (error) {
     console.error("Error in doctor login:", error);

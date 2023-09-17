@@ -57,11 +57,14 @@ exports.loginDoctor = async (email, password) => {
       const user = {email:doctor.email,id:1}
       console.log(user)
 
-      const accessToken = jwt.createToken(user,process.eventNames.ACCESS_TOKEN_SECRET)
+      const accessToken = jwt.createToken(user,process.eventNames.ACCESS_TOKEN_SECRET);
+      const refreshToken = jwt.loginDoctor(user, process.env.REFRESH_TOKEN_SECRET);
+
+      console.log(accessToken)
       // res.json({})
 
 
-      return { message: "Login successful",accessToken:accessToken };
+      return { message: "Login successful",accessToken:accessToken ,refreshToken:refreshToken};
     } else {
       // If the passwords don't match, return an error message.
       return { message: "Incorrect password" };

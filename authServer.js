@@ -9,10 +9,8 @@ const dotenv = require( 'dotenv');
 dotenv.config() ;
 
 
-const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const path = require('path');
-const jwt = require('./config/JWT.js');
 
 
 
@@ -24,17 +22,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //  API routes
-app.use('/patients', require('./routes/patients.js'));
-app.use('/doctors', require('./routes/doctor.js'));
-// app.use('/reports', require('./routes/report.js'));
-app.use('/reports', jwt.validateToken, require('./routes/report.js'));
 app.use('/login', require('./routes/login.js'));
 
 
 
 
 // Start the server
-const PORT = process.env.PORT;
-app.listen(PORT, () => {
-    console.log(`Server started on http://localhost:${PORT}`);
+const AUTH_PORT = process.env.AUTH_PORT;
+app.listen(AUTH_PORT, () => {
+    console.log(`Server started on http://localhost:${AUTH_PORT}`);
   });

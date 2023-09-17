@@ -1,4 +1,13 @@
+const express = require('express');
+const cookieParser = require('cookie-parser');
 
+const app = express();
+
+// Use cookie-parser middleware
+app.use(cookieParser());
+// import variables from .env file
+const dotenv = require( 'dotenv');
+dotenv.config() ;
 
 const { sign , verify } = require('jsonwebtoken');
 
@@ -11,12 +20,13 @@ exports.createToken = (email , id) => {
 
 exports.validateToken = (req, res, next) => {
   try{
-  const accessToken = req.headers.authorization || req.cookies.accessToken;
-  if(accessToken==undefined){return accessToken=null}
+  const accessToken = req.headers.authorization ||"bearer "+ req.cookies.accessToken;
   // console.log("Received AccessToken:", accessToken);
+  console.log("Received req.cookies.accessToken:", req.cookies.accessToken);
+  if(accessToken==undefined){return accessToken=null}
   if (accessToken) {
     const token = accessToken.split(' ')[1]; // Remove "Bearer " prefix
-    console.log("Received AccessToken:", token);
+    console.log("Received AccessToken:", token,"vs","ACCESS_TOKEN_SECRET");
   
 
   console.log("Received AccessToken:", accessToken);
@@ -24,7 +34,7 @@ exports.validateToken = (req, res, next) => {
     verify(token, "ACCESS_TOKEN_SECRET", (error, decoded) => {
       if (error) {
           console.error("Token Verification Error:", error);
-          res.status(401).json({ message: 'Access denied!' });
+          res.status(403).json({ message: 'Access denied!' });
       } else {
           req.user = true;
           next();
@@ -35,3 +45,7 @@ exports.validateToken = (req, res, next) => {
     res.status(401).json({ message: ' User Access required' });
   }}catch{res.status(401).json({ message: ' User Access required' });}
 };
+
+exports.loginDoctor = (req,res,next)=>{
+  console.log("dr")
+}
