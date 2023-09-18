@@ -12,37 +12,38 @@ exports.addToken = (userId, token) => {
     tokenStore[userId] = [];
   }
   tokenStore[userId].push(token);
-  console.log(`Token added for user ${userId}: ${token}`,tokenStore);
+//   console.log(`Token added for user ${userId}: ${token}`,tokenStore);
 };
 
 // Function to remove a token for a user
 exports.removeToken = (userId, token) => {
-  console.log(tokenStore, "Before removing token");
+//   console.log(tokenStore, "Before removing token");
 
   const userTokens = tokenStore[userId];
   const tokenIndex = userTokens.indexOf(token);
-  let x = userTokens.pop();
-    console.log(`Token removed for user ${userId}: ${token}`);
-    console.log(tokenStore.length, "After removing token",x);
-  if (!tokenStore[userId]) {
+  if (!userTokens) {
     return false; // User not found, token not removed
   }
+  let result = userTokens.pop();
+  console.log(`Token removed for user ${userId}: ${result}`);
+  console.log(tokenStore[userId].length, "After removing token",result,tokenIndex);
+  return result;
 
 
-  if (tokenIndex !== -1) {
-    // Remove the token from the user's tokens
-    userTokens.splice(tokenIndex, 1);
+//   if (tokenIndex !== -1) {
+//     // Remove the token from the user's tokens
+//     userTokens.splice(tokenIndex, 1);
 
-    // If no tokens are left for the user, remove the user entry
-    if (userTokens.length === 0) {
-      delete tokenStore[userId];
-    }
+//     // If no tokens are left for the user, remove the user entry
+//     if (userTokens.length === 0) {
+//       delete tokenStore[userId];
+//     }
 
-    return true; // Token removed
-  } else {
-    console.log(`Token not found for user ${userId}: ${token}`);
-    return false; // Token not found for the user
-  }
+//     return true; // Token removed
+//   } else {
+//     console.log(`Token not found for user ${userId}: ${token}`);
+//     return false; // Token not found for the user
+//   }
 };
 
 // Function to get all tokens for a user
